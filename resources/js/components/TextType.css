@@ -1,0 +1,31 @@
+.text-type {
+  display: inline-block;
+  white-space: pre-wrap;
+}
+
+.text-type__content {
+  display: inline-block;
+  white-space: pre-wrap;
+}
+
+.text-type__char {
+  display: inline-block;
+  opacity: 0;
+  will-change: transform, opacity;
+  transform: translateY(12px);
+  /* Force GPU compositing layer */
+  backface-visibility: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+.text-type__cursor {
+  margin-left: 0.25rem;
+  display: inline-block;
+  opacity: 1;
+  will-change: opacity;
+}
+
+.text-type__cursor--hidden {
+  display: none;
+}
+
