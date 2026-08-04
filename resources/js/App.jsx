@@ -3,7 +3,6 @@ import { Routes, Route, useLocation } from 'react-router-dom';
 import { AnimatePresence, motion } from 'framer-motion';
 import Ferrofluid from './components/Ferrofluid';
 import LoadingScreen from './components/LoadingScreen';
-import HomeSection from './components/HomeSection';
 import HudProfileCard from './components/HudProfileCard';
 import AboutSection from './components/AboutSection';
 import ExperienceSection from './components/ExperienceSection';
@@ -11,10 +10,9 @@ import SkillsSection from './components/SkillsSection';
 import EducationSection from './components/EducationSection';
 import Profile from './pages/Profile';
 
-const navigation = ['Home', 'About', 'Experience', 'Skills', 'Projects', 'Education', 'Contact'];
+const navigation = ['About', 'Experience', 'Skills', 'Projects', 'Education', 'Contact'];
 
 const sectionMessages = {
-    Home: 'Scroll down to learn about me',
     About: 'Scroll down to view Experience',
     Experience: 'Scroll down to view Skills',
     Skills: 'Scroll down to view Projects',
@@ -58,7 +56,7 @@ const filters = ['All', 'Web', 'UI', 'Backend'];
 
 function HomePage() {
     const [activeFilter, setActiveFilter] = useState('All');
-    const [activeSection, setActiveSection] = useState('Home');
+    const [activeSection, setActiveSection] = useState('About');
     const wheelLock = useRef(false);
     const [selectedProject, setSelectedProject] = useState(null);
 
@@ -122,7 +120,6 @@ function HomePage() {
     // Ferrofluid opacity varies by section
     const ferrofluidOpacity = useMemo(() => {
         const opacities = {
-            Home: 0.85,
             About: 0.5,
             Experience: 0.35,
             Skills: 0.55,
@@ -136,8 +133,6 @@ function HomePage() {
     // Section entry animation variants
     const sectionAnimation = useMemo(() => {
         switch (activeSection) {
-            case 'Home':
-                return { initial: { opacity: 0 }, animate: { opacity: 1 }, transition: { duration: 0.6, ease: 'easeOut' } };
             case 'About':
                 return { initial: { opacity: 0, y: 40 }, animate: { opacity: 1, y: 0 }, transition: { duration: 0.5, ease: [0.16, 1, 0.3, 1] } };
             case 'Experience':
@@ -156,7 +151,7 @@ function HomePage() {
     }, [activeSection]);
 
     return (
-<main className="site-shell" onWheel={handleSectionWheel}>
+        <main className="site-shell" onWheel={handleSectionWheel}>
             {/* Cyberpunk HUD Profile Card — persists across all home sections */}
             <HudProfileCard />
             <div className="page-grid page-grid--home">
@@ -185,7 +180,6 @@ function HomePage() {
                         transition={sectionAnimation.transition}
                         style={{ height: '100%' }}
                     >
-                        {activeSection === 'Home' && <HomeSection />}
                         {activeSection === 'About' && <AboutSection />}
                         {activeSection === 'Experience' && <ExperienceSection />}
                         {activeSection === 'Skills' && <SkillsSection />}

@@ -1,13 +1,18 @@
-# TODO — Center About Page Content & Clear HUD Obstruction
+# TODO: Remove HomeSection + Redesign About section
 
-## Steps
-- [x] Analyze About page (AboutSection.jsx + app.css `.about-premium-*`)
-- [x] Approve plan with user
-- [x] Center `.about-premium` container (flex + top clearance for HUD avatar)
-- [x] Center `.about-premium-grid` columns vertically
-- [x] Center left column content (label, heading, bio, feature cards)
-- [x] Center right column content (mission, goals, quote)
-- [x] Add responsive top clearance for HUD avatar (980px, 640px)
+## Remove HomeSection from home page
+- [x] Remove `HomeSection` import from `App.jsx`
+- [x] Remove `'Home'` from `navigation` array
+- [x] Remove `Home` from `sectionMessages`
+- [x] Change initial `activeSection` to `'About'`
+- [x] Remove `Home` case from `ferrofluidOpacity`
+- [x] Remove `Home` case from `sectionAnimation`
+- [x] Remove `{activeSection === 'Home' && <HomeSection />}` render
+- [x] Delete `resources/js/components/HomeSection.jsx`
 
-## Follow-up
-- [x] Verify rendering via `npm run dev` / build
+## Redesign About section (Tailwind CSS)
+- [x] Rewrite `AboutSection.jsx` with clean, professional 2-column layout
+- [x] Left: ABOUT ME label, bold headline, short paragraph
+- [x] Right: Mission / Focus / Growth glass cards with hover effects
+- [x] Responsive (stacks on mobile), dark theme, purple/blue accents
+- [x] Verify build

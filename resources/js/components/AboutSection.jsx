@@ -5,150 +5,100 @@ const containerVariants = {
     visible: {
         opacity: 1,
         transition: {
-            staggerChildren: 0.1,
-            delayChildren: 0.2,
+            staggerChildren: 0.12,
+            delayChildren: 0.15,
         },
     },
 };
 
 const itemVariants = {
-    hidden: { opacity: 0, y: 30 },
-    visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: 'easeOut' } },
+    hidden: { opacity: 0, y: 24 },
+    visible: { opacity: 1, y: 0, transition: { duration: 0.55, ease: [0.16, 1, 0.3, 1] } },
 };
 
-const featureCards = [
-    {
-        icon: '💻',
-        title: 'Building',
-        text: 'Transforming ideas into responsive, efficient, and user-friendly web applications.',
-    },
-    {
-        icon: '🧩',
-        title: 'Problem Solving',
-        text: 'Analyzing technical challenges and developing clean, practical solutions.',
-    },
-    {
-        icon: '📚',
-        title: 'Learning',
-        text: 'Continuously improving skills by learning new technologies and best practices.',
-    },
-];
-
-const futureGoals = [
-    'Become a Full Stack Developer',
-    'Master Laravel & React',
-    'Learn Docker',
-    'Learn Cloud Deployment',
-    'Build meaningful software',
-];
+const focusItems = ['Web System Development', 'Laravel & Modern Web Tools', 'System Design'];
 
 export default function AboutSection() {
     return (
-        <section className="about-premium" aria-label="About me">
+        <section className="about-me" aria-label="About me">
             <motion.div
-                className="about-premium-grid"
+                className="h-full w-full max-w-6xl mx-auto px-6 sm:px-8 lg:px-12 pt-24 sm:pt-28 lg:pt-32 flex items-center justify-center"
                 variants={containerVariants}
                 initial="hidden"
                 whileInView="visible"
-                viewport={{ once: true, margin: '-50px' }}
+                viewport={{ once: true, margin: '-60px' }}
             >
-                {/* ===== LEFT COLUMN (60%) ===== */}
-                <div className="about-premium-left">
-                    <motion.span className="about-premium-label" variants={itemVariants}>
-                        ABOUT ME
-                    </motion.span>
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 w-full items-center">
+                    {/* ─── LEFT COLUMN ─── */}
+                    <motion.div variants={itemVariants} className="flex flex-col gap-6 text-left">
+                        <span className="text-purple-400 uppercase tracking-widest text-lm font-bold">
+                            About Me
+                        </span>
 
-                    <motion.h2 className="about-premium-heading" variants={itemVariants}>
-                        Building reliable web applications with a passion for continuous learning.
-                    </motion.h2>
+                        <h2 className="text-4xl sm:text-5xl font-bold text-white leading-tight tracking-tight">
+                            Building reliable and scalable web systems.
+                        </h2>
 
-                    <motion.div className="about-premium-bio" variants={itemVariants}>
-                        <p>
-                            I am a Summa Cum Laude graduate with a Bachelor of Science in Information Systems
-                            who is passionate about building modern web applications and solving technical challenges.
-                            Through academic projects and my internship, I developed hands-on experience in web
-                            development, IT support, and troubleshooting while strengthening my problem-solving
-                            and analytical skills.
-                        </p>
-                        <p>
-                            I enjoy creating clean, responsive, and user-friendly applications that provide practical
-                            solutions to real-world problems. As technology continues to evolve, I am committed to
-                            continuously learning new frameworks, tools, and best practices to grow as a developer
-                            and deliver better software.
+                        <p className="text-gray-300 text-base sm:text-lg leading-relaxed max-w-xl">
+                            I'm a BS Information Systems graduate and a Full Stack Developer
+                            with hands-on experience in web development and IT support. 
+                            I build scalable applications using Laravel and modern frontend tools like React, 
+                            focusing on clean design and performance. 
+                            I enjoy solving real-world problems by creating efficient and user-friendly systems.
                         </p>
                     </motion.div>
 
-                    {/* 3-column feature cards */}
-                    <motion.div className="about-premium-features" variants={itemVariants}>
-                        <div className="about-features-grid">
-                            {featureCards.map((card) => (
-                                <motion.article
-                                    key={card.title}
-                                    className="about-feature-card"
-                                    whileHover={{ scale: 1.02, y: -4 }}
-                                    transition={{ type: 'spring', stiffness: 300, damping: 20 }}
-                                >
-                                    <span className="about-feature-icon" aria-hidden="true">{card.icon}</span>
-                                    <h3 className="about-feature-title">{card.title}</h3>
-                                    <p className="about-feature-text">{card.text}</p>
-                                </motion.article>
-                            ))}
-                        </div>
-                    </motion.div>
-                </div>
-
-                {/* ===== RIGHT COLUMN (40%) ===== */}
-                <div className="about-premium-right">
-                    <motion.article
-                        className="about-info-card"
-                        variants={itemVariants}
-                        whileHover={{ scale: 1.02, y: -4 }}
-                        transition={{ type: 'spring', stiffness: 300, damping: 20 }}
-                    >
-                        <h3 className="about-info-title">Mission</h3>
-                        <p className="about-info-text">
-                            To build reliable, scalable, and user-centered web applications that solve
-                            real-world problems while continuously improving my technical expertise.
-                        </p>
-                    </motion.article>
-
-                    <motion.article
-                        className="about-info-card"
-                        variants={itemVariants}
-                        whileHover={{ scale: 1.02, y: -4 }}
-                        transition={{ type: 'spring', stiffness: 300, damping: 20 }}
-                    >
-                        <h3 className="about-info-title">Future Goals</h3>
-                        <ul className="about-goals-list">
-                            {futureGoals.map((goal) => (
-                                <li key={goal} className="about-goal-item">
-                                    <span className="about-goal-check" aria-hidden="true">✓</span>
-                                    <span>{goal}</span>
-                                </li>
-                            ))}
-                        </ul>
-                    </motion.article>
-
-                    <motion.article
-                        className="about-info-card about-quote-card"
-                        variants={itemVariants}
-                        whileHover={{ scale: 1.02, y: -4 }}
-                        transition={{ type: 'spring', stiffness: 300, damping: 20 }}
-                    >
-                        <h3 className="about-info-title">Development Philosophy</h3>
-                        <blockquote className="about-quote-box">
-                            <span className="about-quote-mark" aria-hidden="true">❝</span>
-                            <p>
-                                Every project is an opportunity to learn, every challenge is an opportunity
-                                to improve, and every solution is a step toward becoming a better developer.
+                    {/* ─── RIGHT COLUMN ─── */}
+                    <motion.div variants={itemVariants} className="flex flex-col gap-5">
+                        {/* Mission */}
+                        <motion.article
+                            className="rounded-xl border border-white/10 bg-white/5 p-6 transition-all duration-300 hover:-translate-y-1 hover:border-purple-500/40"
+                            variants={itemVariants}
+                        >
+                            <h3 className="text-sm font-semibold uppercase tracking-widest text-purple-400 mb-2">
+                                Mission
+                            </h3>
+                            <p className="text-gray-300 text-base leading-relaxed">
+                                To build scalable, user-focused systems that solve real-world problems.
                             </p>
-                            <span className="about-quote-mark about-quote-mark--end" aria-hidden="true">❞</span>
-                        </blockquote>
-                    </motion.article>
+                        </motion.article>
+
+                        {/* Focus */}
+                        <motion.article
+                            className="rounded-xl border border-white/10 bg-white/5 p-6 transition-all duration-300 hover:-translate-y-1 hover:border-purple-500/40"
+                            variants={itemVariants}
+                        >
+                            <h3 className="text-sm font-semibold uppercase tracking-widest text-purple-400 mb-3">
+                                Focus
+                            </h3>
+                            <ul className="flex flex-col gap-2.5">
+                                {focusItems.map((item) => (
+                                    <li
+                                        key={item}
+                                        className="flex items-center gap-3 text-gray-300 text-base"
+                                    >
+                                        <span className="w-1.5 h-1.5 rounded-full bg-purple-500/70 flex-shrink-0" />
+                                        {item}
+                                    </li>
+                                ))}
+                            </ul>
+                        </motion.article>
+
+                        {/* Growth */}
+                        <motion.article
+                            className="rounded-xl border border-white/10 bg-white/5 p-6 transition-all duration-300 hover:-translate-y-1 hover:border-purple-500/40"
+                            variants={itemVariants}
+                        >
+                            <h3 className="text-sm font-semibold uppercase tracking-widest text-purple-400 mb-2">
+                                Growth
+                            </h3>
+                            <p className="text-gray-300 text-base leading-relaxed">
+                                Continuously learning and improving  through real-world projects and new technologies.
+                            </p>
+                        </motion.article>
+                    </motion.div>
                 </div>
             </motion.div>
         </section>
     );
 }
-
-
