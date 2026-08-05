@@ -31,7 +31,7 @@ export default function AboutSection() {
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 w-full items-center">
                     {/* ─── LEFT COLUMN ─── */}
                     <motion.div variants={itemVariants} className="flex flex-col gap-6 text-left">
-                        <span className="text-purple-400 uppercase tracking-widest text-lm font-bold">
+                        <span className="text-purple-400 uppercase tracking-widest text-xl font-bold">
                             About Me
                         </span>
 
@@ -39,7 +39,7 @@ export default function AboutSection() {
                             Building reliable and scalable web systems.
                         </h2>
 
-                        <p className="text-gray-300 text-base sm:text-lg leading-relaxed max-w-xl">
+                        <p className="text-gray-300 text-base sm:text-xl leading-relaxed max-w-xl">
                             I'm a BS Information Systems graduate and a Full Stack Developer
                             with hands-on experience in web development and IT support. 
                             I build scalable applications using Laravel and modern frontend tools like React, 

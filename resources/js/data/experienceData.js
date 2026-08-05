@@ -44,35 +44,5 @@ export const experienceCards = [
         ],
         technologies: ['Laravel', 'PHP', 'MySQL', 'JavaScript', 'Tailwind CSS'],
     },
-    {
-        id: 'projects',
-        icon: '💻',
-        badge: 'Ongoing',
-        badgeColor: '#A855F7',
-        title: 'Development Projects',
-        subtitle: 'Personal Portfolio & Systems',
-        description:
-            'Continuously build projects to strengthen programming skills and explore modern web technologies.',
-        projects: [
-            'Human Resource Management System',
-            'Reservation System',
-            'Online Enrollment System',
-            'E-Commerce System',
-            'Personal Portfolio',
-        ],
-    },
-    {
-        id: 'learning',
-        icon: '📚',
-        badge: 'Currently Learning',
-        badgeColor: '#F59E0B',
-        title: 'Continuous Growth',
-        subtitle: 'Never stop improving',
-        description:
-            'I believe learning never stops. I continuously improve my skills through personal projects, online resources, and hands-on practice.',
-        currentlyLearning: ['React', 'Docker', 'REST APIs', 'Cloud Deployment', 'Modern UI/UX', 'Git Workflow'],
-        careerGoal: 'Become a highly skilled Full Stack Developer capable of building scalable, modern, and user-focused web applications.',
-        fullWidth: true,
-    },
 ];
 

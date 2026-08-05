@@ -6,8 +6,6 @@ const categoryIcons = {
     Education: '🎓',
     Internship: '💼',
     Capstone: '🚀',
-    Projects: '💻',
-    Learning: '📚',
 };
 
 const cardVariants = {

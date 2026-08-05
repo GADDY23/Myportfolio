@@ -1,18 +1,17 @@
-# TODO: Remove HomeSection + Redesign About section
+# TODO
 
-## Remove HomeSection from home page
-- [x] Remove `HomeSection` import from `App.jsx`
-- [x] Remove `'Home'` from `navigation` array
-- [x] Remove `Home` from `sectionMessages`
-- [x] Change initial `activeSection` to `'About'`
-- [x] Remove `Home` case from `ferrofluidOpacity`
-- [x] Remove `Home` case from `sectionAnimation`
-- [x] Remove `{activeSection === 'Home' && <HomeSection />}` render
-- [x] Delete `resources/js/components/HomeSection.jsx`
+## Task: Remove non-education/internship/capstone items from Experience section
 
-## Redesign About section (Tailwind CSS)
-- [x] Rewrite `AboutSection.jsx` with clean, professional 2-column layout
-- [x] Left: ABOUT ME label, bold headline, short paragraph
-- [x] Right: Mission / Focus / Growth glass cards with hover effects
-- [x] Responsive (stacks on mobile), dark theme, purple/blue accents
-- [x] Verify build
+- [x] 1. Remove `projects` (Development Projects) card from `resources/js/data/experienceData.js`
+- [x] 2. Remove `learning` (Continuous Growth) card from `resources/js/data/experienceData.js`
+- [x] 3. Remove unused `Projects` and `Learning` icons from `categoryIcons` in `resources/js/components/ExperienceSection.jsx`
+- [x] 4. Rebuild assets (`npm run build`) and verify timeline shows only Education, Internship, Capstone
+
+## Task: Make Experience timeline fit on one page (design preserved)
+
+- [x] 1. Compact `.timeline-section` container (padding, overflow hidden, gap)
+- [x] 2. Compact section header (smaller label, heading, subtitle)
+- [x] 3. Compact timeline items, nodes, cards, tags, and lists
+- [x] 4. Update responsive breakpoints (980px, 640px) to match compact sizing
+- [x] 5. Rebuild assets (`npm run build`) and verify timeline fits on one viewport
+
