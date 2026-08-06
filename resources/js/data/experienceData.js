@@ -12,7 +12,7 @@ export const experienceCards = [
             '🏆 Best in Capstone',
         ],
         description:
-            'Built a strong academic foundation in software development, systems analysis, database management, networking, and IT support while completing multiple software development projects.',
+            'Built a strong foundation in software development, systems analysis, database management, and networking. Delivered 5+ system-based projects focused on solving real-world problems and improving operational efficiency.',
     },
     {
         id: 'internship',
@@ -23,7 +23,7 @@ export const experienceCards = [
         subtitle: 'Sagility — Bridgetowne, Pasig City',
         year: '2025',
         description:
-            'Completed an internship providing technical support, troubleshooting hardware and software issues, maintaining computer systems, documenting technical activities, and assisting end users.',
+            'Provided hands-on technical support by troubleshooting hardware and software issues, maintaining computer systems, and assisting end users. Strengthened problem-solving skills through real-world IT environments.',
         skills: ['Technical Support', 'Troubleshooting', 'System Maintenance', 'Documentation', 'Hardware', 'Software'],
     },
     {
@@ -33,10 +33,12 @@ export const experienceCards = [
         badgeColor: '#10B981',
         title: 'Lead Full Stack Developer',
         subtitle: 'Web-Based Scheduling and Assignment System',
+        featured: true,
         description:
-            'Developed a complete scheduling and assignment system for ACLC College of Taytay.',
+            'Built a full scheduling and assignment platform for ACLC College of Taytay, replacing a manual process with an automated, conflict-free workflow.',
         highlights: [
-            'Automated Scheduling',
+            'Reduced scheduling conflicts',
+            'Automated manual scheduling process',
             'Drag-and-Drop Timetable',
             'Conflict Detection',
             'Role-Based Authentication',
@@ -45,4 +47,3 @@ export const experienceCards = [
         technologies: ['Laravel', 'PHP', 'MySQL', 'JavaScript', 'Tailwind CSS'],
     },
 ];
-

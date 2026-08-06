@@ -94,15 +94,15 @@ const technologies = [
     'Laravel',
     'PHP',
     'JavaScript',
-    'React',
     'HTML5',
     'CSS3',
-    'Tailwind CSS',
     'Bootstrap',
     'MySQL',
     'Git',
     'GitHub',
     'Visual Studio Code',
+    'Laragon',
+    'XAMPP',
 ];
 
 export default function EducationSection() {

@@ -33,12 +33,16 @@ const nodeVariants = {
 
 function TimelineCard({ card, index }) {
     const isLeft = index % 2 === 0;
+    const isFeatured = !!card.featured;
     const cardRef = useRef(null);
+
+    // Show only 3 key features for the featured (Capstone) card
+    const visibleHighlights = isFeatured && card.highlights ? card.highlights.slice(0, 3) : card.highlights;
 
     return (
         <motion.article
             ref={cardRef}
-            className={`timeline-card ${isLeft ? 'timeline-card--left' : 'timeline-card--right'}`}
+            className={`timeline-card ${isLeft ? 'timeline-card--left' : 'timeline-card--right'} ${isFeatured ? 'timeline-card--featured' : ''}`}
             custom={isLeft}
             variants={cardVariants}
             initial="hidden"
@@ -47,6 +51,9 @@ function TimelineCard({ card, index }) {
             whileHover={{ y: -4, scale: 1.01 }}
             transition={{ type: 'spring', stiffness: 300, damping: 25 }}
         >
+            {/* Hover shine sweep */}
+            <span className="timeline-card-shine" aria-hidden="true" />
+
             <div className="timeline-card-inner">
                 {/* Card header */}
                 <div className="timeline-card-header">
@@ -69,6 +76,9 @@ function TimelineCard({ card, index }) {
                     </span>
                     {card.year && (
                         <span className="timeline-card-year">{card.year}</span>
+                    )}
+                    {isFeatured && (
+                        <span className="timeline-card-featuretag">★ Featured</span>
                     )}
                 </div>
 
@@ -114,10 +124,10 @@ function TimelineCard({ card, index }) {
                     </div>
                 )}
 
-                {/* Highlights */}
-                {card.highlights && (
-                    <ul className="timeline-card-list">
-                        {card.highlights.map((h) => (
+                {/* Highlights / Metrics */}
+                {visibleHighlights && (
+                    <ul className={`timeline-card-list ${isFeatured ? 'timeline-card-list--features' : ''}`}>
+                        {visibleHighlights.map((h) => (
                             <li key={h} className="timeline-card-list-item">
                                 <span className="timeline-card-check">✔</span>
                                 {h}
@@ -138,6 +148,34 @@ function TimelineCard({ card, index }) {
                 {/* Career Goal */}
                 {card.careerGoal && (
                     <p className="timeline-card-goal">{card.careerGoal}</p>
+                )}
+
+                {/* See more (Education & Capstone only) */}
+                {(card.id === 'education' || card.id === 'capstone') && (
+                    <span
+                        className="timeline-card-seemore timeline-card-seemore--link"
+                        role="button"
+                        tabIndex={0}
+                        onClick={() =>
+                            window.dispatchEvent(
+                                new CustomEvent('navigate-to-section', {
+                                    detail: { section: card.id === 'education' ? 'Education' : 'Projects' },
+                                })
+                            )
+                        }
+                        onKeyDown={(e) => {
+                            if (e.key === 'Enter' || e.key === ' ') {
+                                e.preventDefault();
+                                window.dispatchEvent(
+                                    new CustomEvent('navigate-to-section', {
+                                        detail: { section: card.id === 'education' ? 'Education' : 'Projects' },
+                                    })
+                                );
+                            }
+                        }}
+                    >
+                        See more
+                    </span>
                 )}
             </div>
         </motion.article>
@@ -185,10 +223,6 @@ export default function ExperienceSection() {
                 >
                     <span className="timeline-section-label">EXPERIENCE</span>
                     <h2 className="timeline-section-heading">My Professional Journey</h2>
-                    <p className="timeline-section-subtitle">
-                        A journey of learning, building, and growing through education, real-world
-                        experience, and continuous development.
-                    </p>
                 </motion.div>
 
                 {/* Timeline */}
@@ -220,6 +254,9 @@ export default function ExperienceSection() {
                                     </div>
                                 </motion.div>
 
+                                {/* Connector from node to card */}
+                                <span className="timeline-item-connector" aria-hidden="true" />
+
                                 {/* Card */}
                                 <TimelineCard card={card} index={index} />
                             </div>
@@ -230,4 +267,3 @@ export default function ExperienceSection() {
         </section>
     );
 }
-

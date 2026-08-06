@@ -16,7 +16,7 @@ const itemVariants = {
     visible: { opacity: 1, y: 0, transition: { duration: 0.55, ease: [0.16, 1, 0.3, 1] } },
 };
 
-const focusItems = ['Web System Development', 'Laravel & Modern Web Tools', 'System Design'];
+const focusItems = ['Software Development', 'Laravel & Modern Web Tools', 'System Design'];
 
 export default function AboutSection() {
     return (
