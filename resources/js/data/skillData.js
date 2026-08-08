@@ -27,7 +27,7 @@ export const skillCategories = [
                 description: 'Styling language used to design and layout web pages with modern features.',
                 projects: ['Personal Portfolio', 'HRMS', 'Scheduling System'],
                 experience: 'Academic Projects',
-                confidence: 'Advanced',
+                confidence: 'Intermediate',
                 relatedSkills: ['HTML5', 'Tailwind CSS', 'Bootstrap'],
             },
             {
@@ -39,7 +39,7 @@ export const skillCategories = [
                 description: 'Dynamic programming language for adding interactivity and logic to web pages.',
                 projects: ['Personal Portfolio', 'Scheduling System'],
                 experience: 'Academic Projects',
-                confidence: 'Intermediate',
+                confidence: 'Advanced',
                 relatedSkills: ['React', 'HTML5', 'CSS3'],
             },
             {
@@ -51,7 +51,7 @@ export const skillCategories = [
                 description: 'Modern JavaScript library for building component-based user interfaces.',
                 projects: ['Personal Portfolio'],
                 experience: 'Personal Projects',
-                confidence: 'Intermediate',
+                confidence: 'Learning',
                 relatedSkills: ['JavaScript', 'Tailwind CSS', 'Vite'],
             },
             {
@@ -96,7 +96,7 @@ export const skillCategories = [
                 description: 'Modern PHP framework used to build scalable web applications.',
                 projects: ['HRMS', 'Scheduling System', 'Personal Portfolio'],
                 experience: 'Academic Projects',
-                confidence: 'Intermediate',
+                confidence: 'Advanced',
                 relatedSkills: ['PHP', 'MySQL', 'REST API'],
             },
             {
@@ -108,7 +108,7 @@ export const skillCategories = [
                 description: 'Server-side scripting language for building dynamic web applications.',
                 projects: ['HRMS', 'Scheduling System'],
                 experience: 'Academic Projects',
-                confidence: 'Intermediate',
+                confidence: 'Advanced',
                 relatedSkills: ['Laravel', 'MySQL', 'REST API'],
             },
             {
@@ -120,7 +120,7 @@ export const skillCategories = [
                 description: 'Architectural style for designing networked applications with HTTP endpoints.',
                 projects: ['HRMS', 'Scheduling System'],
                 experience: 'Personal Projects',
-                confidence: 'Learning',
+                confidence: 'Intermediate',
                 relatedSkills: ['Laravel', 'PHP', 'Postman'],
             },
         ],

@@ -15,7 +15,7 @@ const PROGRESS_MESSAGES = [
   { threshold: 30, message: 'Loading Experience...' },
   { threshold: 45, message: 'Loading Projects...' },
   { threshold: 60, message: 'Loading Skills...' },
-  { threshold: 70, message: 'Connecting GitHub...' },
+  { threshold: 70, message: 'Loading Contact...' },
   { threshold: 82, message: 'Preparing Interface...' },
   { threshold: 92, message: 'Optimizing User Experience...' },
   { threshold: 97, message: 'Almost Ready...' },
