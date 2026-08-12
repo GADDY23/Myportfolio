@@ -30,11 +30,33 @@ const projects = [
         accent: 'teal',
     },
     {
-        title: 'Management Dashboard',
+        title: 'Healthcare Hospital System',
         category: 'Web',
-        summary: 'Admin dashboard concept for tracking records, activity, and important status changes in one clean workspace.',
-        tech: ['Laravel', 'MySQL', 'Blade'],
+        summary: 'A hospital management platform where patients can view services, explore departments, find doctors, schedule appointments, and manage their records online.',
+        tech: ['Laravel', 'MySQL', 'Blade', 'Filament'],
         accent: 'blue',
+        image: '/images/hp.png',
+        gallery: ['/images/hp.png', '/images/hp2.png', '/images/hp3.png', '/images/hp4.png'],
+        documentation: '/documents/FINALS%20(1).pdf',
+        problem: 'Hospitals often rely on manual and fragmented processes for booking appointments, exploring departments, finding the right doctor, and managing patient records. This makes it difficult and time-consuming for patients to access care and for staff to keep information organized and accurate.',
+        solution: 'Built a modern, user-friendly hospital management system that lets patients view services, explore departments, find doctors, and schedule appointments online while centralizing patient information and records for the hospital. An integrated admin panel keeps records, appointments, and system data manageable.',
+        features: ['Hospital dashboard with Home, Services, Departments, Doctors, Patient Info, Appointments, and Registration', 'Responsive layout with sidebar navigation, quick links, and patient profile access', 'Homepage overview with live capacity, average waiting time, and quick booking actions', 'Service, department, and doctor pages with scheduling and booking options', 'Appointment tracking and patient information management', 'Filament admin panel for managing records, appointments, and system data'],
+        lessons: 'This project reinforced the importance of structuring a full-stack Laravel application with clear separation between the public-facing Blade pages and the Filament admin panel. It deepened my understanding of database relationships, appointment workflows, and building responsive, user-friendly healthcare interfaces.',
+    },
+    {
+        title: 'DineTable — Saffron Table',
+        category: 'Web',
+        summary: 'A responsive restaurant reservation platform for Saffron Table, with dining experiences, menu browsing, guest registration, and table booking in one polished flow.',
+        tech: ['Laravel', 'MySQL', 'Blade', 'Filament'],
+        accent: 'amber',
+        image: '/images/table.png',
+        gallery: ['/images/table.png', '/images/table1.png', '/images/table2.png', '/images/table3.png', '/images/table5.png'],
+        galleryCaptions: ['Home Page', 'Mobile Home Page', 'Menu Page', 'Guest Registration Page', 'Booking / Reserve Page'],
+        documentation: '/documents/dinetable.pdf',
+        problem: 'Restaurant guests need a clear way to discover dining options, review the menu, create a guest profile, and reserve a table without switching between disconnected pages or manual booking steps.',
+        solution: 'Created a responsive Saffron Table reservation platform that guides guests from the restaurant homepage through dining experiences and menu browsing to registration, customer information, and a complete booking flow.',
+        features: ['Restaurant homepage with dining highlights and quick reservation actions', 'Dining Experiences page for exploring available services and setups', 'Menu page for browsing signature plates, house favorites, and drinks', 'Guest Registration page for creating a customer account', 'Customer Info page for saving and managing guest details', 'Booking / Reservation page for selecting guest, table, date, time, and special request details', 'Admin pages for managing users, guest information, and reservations'],
+        lessons: 'This project strengthened my understanding of designing a complete reservation journey, connecting customer data to booking records, and building responsive restaurant interfaces that feel consistent from discovery through confirmation.',
     },
     {
         title: 'Booking Flow',
@@ -276,7 +298,10 @@ function Projects({ activeFilter, onFilterChange, projects, onSelectProject, sel
                         transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
                         onClick={() => onSelectProject(featured)}
                     >
-                        <div className={`project-featured-preview ${featured.accent}`}>
+                        <div className={`project-featured-preview ${featured.accent} ${featured.image ? 'has-image' : ''}`}>
+                            {featured.image && (
+                                <img src={featured.image} alt={featured.title} className="project-featured-img" />
+                            )}
                             <div className="project-featured-overlay">
                                 <span className="project-featured-badge">Featured Project</span>
                                 <h3 className="project-featured-title">{featured.title}</h3>
@@ -300,11 +325,14 @@ function Projects({ activeFilter, onFilterChange, projects, onSelectProject, sel
                             className="project-gallery-card"
                             initial={{ opacity: 0, scale: 0.92 }}
                             animate={{ opacity: 1, scale: 1 }}
-                            transition={{ duration: 0.4, delay: 0.1 + i * 0.08, ease: 'easeOut' }}
+transition={{ duration: 0.4, delay: 0.1 + i * 0.08, ease: 'easeOut' }}
                             whileHover={{ y: -6, scale: 1.02 }}
                             onClick={() => onSelectProject(project)}
                         >
-                            <div className={`project-gallery-preview ${project.accent}`}>
+                        <div className={`project-gallery-preview ${project.accent} ${project.image ? 'has-image' : ''}`}>
+                                {project.image && (
+                                    <img src={project.image} alt={project.title} className="project-gallery-img" />
+                                )}
                                 <div className="project-gallery-badge">{project.category}</div>
                                 <div className="project-gallery-lines">
                                     <span></span><span></span><span></span>
@@ -329,9 +357,17 @@ function Projects({ activeFilter, onFilterChange, projects, onSelectProject, sel
 
 /* ─── Project Modal ─── */
 function ProjectModal({ project, onClose }) {
+    const [selectedImage, setSelectedImage] = useState(null);
+
     useEffect(() => {
         const handleEsc = (e) => {
-            if (e.key === 'Escape') onClose();
+            if (e.key === 'Escape') {
+                if (selectedImage) {
+                    setSelectedImage(null);
+                } else {
+                    onClose();
+                }
+            }
         };
         window.addEventListener('keydown', handleEsc);
         document.body.style.overflow = 'hidden';
@@ -339,7 +375,7 @@ function ProjectModal({ project, onClose }) {
             window.removeEventListener('keydown', handleEsc);
             document.body.style.overflow = '';
         };
-    }, [onClose]);
+    }, [onClose, selectedImage]);
 
     return (
         <motion.div
@@ -366,6 +402,25 @@ function ProjectModal({ project, onClose }) {
                     <h2 className="project-modal-title">{project.title}</h2>
                 </div>
 
+                {/* Project Screenshots */}
+                {project.gallery && project.gallery.length > 0 && (
+                    <div className="project-modal-gallery">
+                        {project.gallery.map((src, index) => (
+                            <button
+                                key={src}
+                                type="button"
+                                className="project-modal-gallery-item"
+                                onClick={() => setSelectedImage(src)}
+                                aria-label={`View ${project.title} screenshot in full size`}
+                            >
+                                <img src={src} alt={`${project.title} screenshot`} className="project-modal-gallery-img" />
+                                <span className="project-modal-gallery-caption">{project.galleryCaptions?.[index]}</span>
+                                <span className="project-modal-gallery-hint">Click to enlarge</span>
+                            </button>
+                        ))}
+                    </div>
+                )}
+
                 <div className="project-modal-body">
                     {/* Overview */}
                     <div className="project-modal-section">
@@ -376,38 +431,24 @@ function ProjectModal({ project, onClose }) {
                     {/* Problem */}
                     <div className="project-modal-section">
                         <h3 className="project-modal-section-title">Problem</h3>
-                        <p className="project-modal-text">
-                            The challenge was to create a modern, recruiter-focused platform that effectively
-                            showcases technical skills, project experience, and professional identity in a
-                            memorable and interactive way.
-                        </p>
+                        <p className="project-modal-text">{project.problem}</p>
                     </div>
 
                     {/* Solution */}
                     <div className="project-modal-section">
                         <h3 className="project-modal-section-title">Solution</h3>
-                        <p className="project-modal-text">
-                            Built a terminal-inspired portfolio with a unique navigation system, ferrofluid
-                            background effects, and a clean glassmorphism design language that reflects both
-                            technical competence and creative thinking.
-                        </p>
+                        <p className="project-modal-text">{project.solution}</p>
                     </div>
 
                     {/* Features */}
                     <div className="project-modal-section">
                         <h3 className="project-modal-section-title">Key Features</h3>
-                        <ul className="project-modal-list">
-                            <li>Interactive section navigation with wheel and keyboard support</li>
-                            <li>Dynamic skill tree with expandable category nodes</li>
-                            <li>Animated ferrofluid background with varying intensity</li>
-                            <li>Vertical timeline for experience storytelling</li>
-                            <li>Responsive glassmorphism design system</li>
-                        </ul>
+                        <ul className="project-modal-list">{project.features.map((feature) => <li key={feature}>{feature}</li>)}</ul>
                     </div>
 
                     {/* Tech Stack */}
                     <div className="project-modal-section">
-                        <h3 className="project-modal-section-title">Technology Stack</h3>
+<h3 className="project-modal-section-title">Technology Stack</h3>
                         <div className="project-modal-tech">
                             {project.tech.map((t) => (
                                 <span key={t} className="project-modal-tech-tag">{t}</span>
@@ -418,23 +459,21 @@ function ProjectModal({ project, onClose }) {
                     {/* Lessons Learned */}
                     <div className="project-modal-section">
                         <h3 className="project-modal-section-title">Lessons Learned</h3>
-                        <p className="project-modal-text">
-                            This project reinforced the importance of component architecture, animation
-                            performance optimization, and creating a cohesive design system that scales
-                            across different screen sizes and interaction modes.
-                        </p>
+                        <p className="project-modal-text">{project.lessons}</p>
                     </div>
 
                     {/* Actions */}
                     <div className="project-modal-actions">
-                        <a
-                            href="https://github.com/GADDY23"
-                            target="_blank"
-                            rel="noreferrer"
-                            className="project-modal-btn project-modal-btn--primary"
-                        >
-                            View on GitHub
-                        </a>
+                        {project.documentation && (
+                            <a
+                                href={project.documentation}
+                                target="_blank"
+                                rel="noreferrer"
+                                className="project-modal-btn project-modal-btn--primary"
+                            >
+                                View Documentation
+                            </a>
+                        )}
                         <a
                             href="#"
                             className="project-modal-btn project-modal-btn--secondary"
@@ -448,6 +487,36 @@ function ProjectModal({ project, onClose }) {
                     </div>
                 </div>
             </motion.div>
+
+            <AnimatePresence>
+                {selectedImage && (
+                    <motion.div
+                        className="project-image-lightbox"
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                        onClick={() => setSelectedImage(null)}
+                    >
+                        <motion.div
+                            className="project-image-lightbox-content"
+                            initial={{ opacity: 0, scale: 0.95 }}
+                            animate={{ opacity: 1, scale: 1 }}
+                            exit={{ opacity: 0, scale: 0.95 }}
+                            onClick={(e) => e.stopPropagation()}
+                        >
+                            <button
+                                type="button"
+                                className="project-image-lightbox-close"
+                                onClick={() => setSelectedImage(null)}
+                                aria-label="Close full-size image"
+                            >
+                                ×
+                            </button>
+                            <img src={selectedImage} alt={`${project.title} screenshot in full size`} className="project-image-lightbox-img" />
+                        </motion.div>
+                    </motion.div>
+                )}
+            </AnimatePresence>
         </motion.div>
     );
 }
@@ -596,4 +665,3 @@ function App() {
 }
 
 export default App;
-
