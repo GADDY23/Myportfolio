@@ -23,11 +23,17 @@ const sectionMessages = {
 
 const projects = [
     {
-        title: 'Job Portfolio',
+        title: 'Web-Based Scheduling & Assignment System',
         category: 'Web',
-        summary: 'A recruiter-focused portfolio with a terminal-inspired interface, project proof, skills, and contact paths.',
-        tech: ['React', 'Vite', 'Tailwind CSS'],
+        summary: 'A capstone system for ACLC College of Taytay that streamlines academic scheduling for rooms, teachers, subjects, and student sections.',
+        tech: ['Laravel 12', 'PHP', 'MySQL', 'Blade', 'Tailwind CSS', 'JavaScript'],
         accent: 'teal',
+        video: '/videos/schedulingvideo.mp4',
+        documentation: '/documents/surena%20(1).pdf',
+        problem: 'ACLC College of Taytay relied on manual scheduling and spreadsheet checks, making it time-consuming and prone to double bookings, overlapping classes, uneven teaching loads, and incorrect room assignments.',
+        solution: 'Developed a secure, role-based web application that centralizes academic scheduling. Administrators can assign rooms, teachers, subjects, and sections while the system checks for time and resource conflicts before schedules are saved.',
+        features: ['Role-based access for administrators, teachers, and students', 'Management of users, teachers, rooms, subjects, sections, curricula, and academic terms', 'Schedule creation with teacher, room, and section conflict detection', 'Personalized “My Timetable” views for teachers and students', 'Schedules searchable by teacher, section, or room', 'Dashboard notifications for schedule changes and announcements'],
+        lessons: 'This capstone strengthened my experience building a full-stack Laravel application, modelling related academic data, validating scheduling constraints, and designing role-specific workflows. The system was tested through user acceptance testing and evaluated using ISO/IEC 25010 quality criteria.',
     },
     {
         title: 'Healthcare Hospital System',
@@ -298,9 +304,12 @@ function Projects({ activeFilter, onFilterChange, projects, onSelectProject, sel
                         transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
                         onClick={() => onSelectProject(featured)}
                     >
-                        <div className={`project-featured-preview ${featured.accent} ${featured.image ? 'has-image' : ''}`}>
+                        <div className={`project-featured-preview ${featured.accent} ${featured.image || featured.video ? 'has-media' : ''}`}>
                             {featured.image && (
                                 <img src={featured.image} alt={featured.title} className="project-featured-img" />
+                            )}
+                            {featured.video && (
+                                <video className="project-featured-video" src={featured.video} muted loop autoPlay playsInline aria-label={`${featured.title} demo video`} />
                             )}
                             <div className="project-featured-overlay">
                                 <span className="project-featured-badge">Featured Project</span>
@@ -402,7 +411,16 @@ function ProjectModal({ project, onClose }) {
                     <h2 className="project-modal-title">{project.title}</h2>
                 </div>
 
-                {/* Project Screenshots */}
+                {/* Project demo video */}
+                {project.video && (
+                    <div className="project-modal-video-wrap">
+                        <video className="project-modal-video" src={project.video} controls playsInline preload="metadata">
+                            Your browser does not support embedded video.
+                        </video>
+                    </div>
+                )}
+
+                {/* Project screenshots */}
                 {project.gallery && project.gallery.length > 0 && (
                     <div className="project-modal-gallery">
                         {project.gallery.map((src, index) => (
