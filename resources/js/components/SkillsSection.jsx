@@ -29,7 +29,8 @@ export default function SkillsSection() {
 
     const handleCategorySelect = (categoryId) => {
         setSelectedCategory(categoryId);
-        // Don't clear selected skill when changing categories
+        // The terminal should always describe the branch currently being explored.
+        setSelectedSkill(null);
     };
 
     return (
@@ -45,10 +46,10 @@ export default function SkillsSection() {
                 <motion.div className="skills-section-header" variants={itemVariants}>
                     <span className="skills-section-label">SKILLS</span>
                     <h2 className="skills-section-heading">
-                        Technologies and tools I use to build modern web applications and provide reliable technical support.
+                        Technologies I use to build reliable digital solutions.
                     </h2>
                     <p className="skills-section-subtitle">
-                        Every skill represents practical experience gained through academic projects, internships, and continuous learning.
+                        Explore the skill tree to see my experience and proficiency.
                     </p>
                 </motion.div>
 

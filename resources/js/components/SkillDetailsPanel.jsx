@@ -8,7 +8,11 @@ const confidenceColors = {
 
 export default function SkillDetailsPanel({ selectedSkill }) {
     return (
-        <div className="skill-details-panel">
+        <motion.div
+            className="skill-details-panel"
+            layout
+            transition={{ duration: 0.28, ease: 'easeOut' }}
+        >
             <AnimatePresence mode="wait">
                 {selectedSkill ? (
                     <motion.div
@@ -62,9 +66,9 @@ export default function SkillDetailsPanel({ selectedSkill }) {
                             </span>
                         </div>
 
-                        {/* Confidence */}
+                        {/* Proficiency */}
                         <div className="skill-details-section">
-                            <h4 className="skill-details-section-title">Confidence</h4>
+                            <h4 className="skill-details-section-title">Proficiency</h4>
                             <div className="skill-details-confidence">
                                 <div
                                     className="skill-details-confidence-bar"
@@ -119,7 +123,7 @@ export default function SkillDetailsPanel({ selectedSkill }) {
                     </motion.div>
                 )}
             </AnimatePresence>
-        </div>
+        </motion.div>
     );
 }
 

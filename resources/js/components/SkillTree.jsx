@@ -1,5 +1,5 @@
 import { useState, useCallback, useRef, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence, useReducedMotion } from 'framer-motion';
 import CoreNode from './CoreNode';
 import CategoryNode from './CategoryNode';
 import SkillNode from './SkillNode';
@@ -11,7 +11,8 @@ export default function SkillTree({ onSkillSelect, selectedSkill, onCategorySele
     const [hoveredCategory, setHoveredCategory] = useState(null);
     const [coreActive, setCoreActive] = useState(false);
     const containerRef = useRef(null);
-    const [positions, setPositions] = useState({ core: null, categories: {} });
+    const [positions, setPositions] = useState({ core: null, categories: {}, children: {}, width: 0 });
+    const shouldReduceMotion = useReducedMotion();
 
     const handleCategoryClick = useCallback((categoryId) => {
         const newExpanded = expandedCategory === categoryId ? null : categoryId;
@@ -54,11 +55,15 @@ export default function SkillTree({ onSkillSelect, selectedSkill, onCategorySele
 
             // Core node position (center)
             const coreEl = container.querySelector('.skill-core-node');
+            const getCenter = (element) => {
+                const rect = element.getBoundingClientRect();
+                return {
+                    x: rect.left - containerRect.left + rect.width / 2,
+                    y: rect.top - containerRect.top + rect.height / 2,
+                };
+            };
             const corePos = coreEl
-                ? {
-                      x: coreEl.offsetLeft + coreEl.offsetWidth / 2,
-                      y: coreEl.offsetTop + coreEl.offsetHeight / 2,
-                  }
+                ? getCenter(coreEl)
                 : { x: containerRect.width / 2, y: 60 };
 
             // Category positions
@@ -71,37 +76,61 @@ export default function SkillTree({ onSkillSelect, selectedSkill, onCategorySele
                     el.getAttribute('aria-label')?.startsWith(c.label)
                 );
                 if (cat) {
-                    catPositions[cat.id] = {
-                        x: el.offsetLeft + el.offsetWidth / 2,
-                        y: el.offsetTop + el.offsetHeight / 2,
-                    };
+                    catPositions[cat.id] = getCenter(el);
                 }
             });
 
-            setPositions({ core: corePos, categories: catPositions });
+            const childPositions = {};
+            container.querySelectorAll('.skill-node').forEach((el) => {
+                const categoryId = el.dataset.categoryId;
+                if (categoryId) {
+                    childPositions[categoryId] ??= [];
+                    childPositions[categoryId].push(getCenter(el));
+                }
+            });
+
+            setPositions({
+                core: corePos,
+                categories: catPositions,
+                children: childPositions,
+                width: containerRect.width,
+            });
         };
 
         // Delay to ensure DOM is rendered
         const timer = setTimeout(calculatePositions, 100);
+        const expandedTimer = setTimeout(calculatePositions, 360);
         window.addEventListener('resize', calculatePositions);
 
         return () => {
             clearTimeout(timer);
+            clearTimeout(expandedTimer);
             window.removeEventListener('resize', calculatePositions);
         };
     }, [expandedCategory]);
 
-    const selectedCategoryData = selectedCategory
-        ? skillCategories.find((c) => c.id === selectedCategory)
+    const expandedCategoryData = expandedCategory
+        ? skillCategories.find((c) => c.id === expandedCategory)
         : null;
 
+    const branchWidth = 176;
+    const parentX = expandedCategory ? positions.categories[expandedCategory]?.x : null;
+    const safeAnchorX = parentX && positions.width
+        ? Math.min(Math.max(parentX, branchWidth / 2), positions.width - branchWidth / 2)
+        : null;
+    const branchOffset = safeAnchorX && positions.width
+        ? safeAnchorX - positions.width / 2
+        : 0;
+
     return (
-        <div className="skill-tree-container" ref={containerRef}>
+        <div className={`skill-tree-container ${selectedCategory ? 'skill-tree-container--has-selection' : ''}`} ref={containerRef}>
             <ConnectionLines
                 categoryPositions={positions.categories}
                 corePosition={positions.core}
                 selectedCategory={selectedCategory}
                 hoveredCategory={hoveredCategory}
+                childPositions={positions.children}
+                reduceMotion={shouldReduceMotion}
             />
 
             {/* Core Node - Center */}
@@ -125,36 +154,38 @@ export default function SkillTree({ onSkillSelect, selectedSkill, onCategorySele
                             onLeave={handleCategoryLeave}
                             index={index}
                         />
-                        {/* Expanded skill nodes for this category */}
-                        <AnimatePresence>
-                            {expandedCategory === category.id && (
-                                <motion.div
-                                    className="skill-tree-nodes"
-                                    initial={{ height: 0, opacity: 0 }}
-                                    animate={{ height: 'auto', opacity: 1 }}
-                                    exit={{ height: 0, opacity: 0 }}
-                                    transition={{ duration: 0.3, ease: 'easeInOut' }}
-                                >
-                                    <div className="skill-tree-nodes-inner">
-                                        {category.skills.map((skill, skillIndex) => (
-                                            <SkillNode
-                                                key={skill.id}
-                                                skill={skill}
-                                                accent={category.accent}
-                                                isSelected={selectedSkill?.id === skill.id}
-                                                isExpanded={true}
-                                                onClick={handleSkillClick}
-                                                index={skillIndex}
-                                                categoryId={category.id}
-                                            />
-                                        ))}
-                                    </div>
-                                </motion.div>
-                            )}
-                        </AnimatePresence>
                     </div>
                 ))}
             </div>
+
+            <AnimatePresence mode="wait">
+                {expandedCategoryData && (
+                    <motion.div
+                        key={expandedCategoryData.id}
+                        className="skill-tree-nodes"
+                        style={{ '--branch-offset': `${branchOffset}px` }}
+                        initial={{ height: 0, opacity: 0 }}
+                        animate={{ height: 'auto', opacity: 1 }}
+                        exit={{ height: 0, opacity: 0 }}
+                        transition={{ duration: shouldReduceMotion ? 0.01 : 0.28, ease: 'easeOut' }}
+                    >
+                        <div className="skill-tree-nodes-inner">
+                            {expandedCategoryData.skills.map((skill, skillIndex) => (
+                                <SkillNode
+                                    key={skill.id}
+                                    skill={skill}
+                                    accent={expandedCategoryData.accent}
+                                    isSelected={selectedSkill?.id === skill.id}
+                                    isExpanded={true}
+                                    onClick={handleSkillClick}
+                                    index={skillIndex}
+                                    categoryId={expandedCategoryData.id}
+                                />
+                            ))}
+                        </div>
+                    </motion.div>
+                )}
+            </AnimatePresence>
         </div>
     );
 }

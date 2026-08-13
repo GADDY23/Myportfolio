@@ -1,22 +1,24 @@
-import { motion } from 'framer-motion';
+import { motion, useReducedMotion } from 'framer-motion';
 
 export default function SkillNode({ skill, accent, isSelected, isExpanded, onClick, index, categoryId }) {
+    const shouldReduceMotion = useReducedMotion();
+
     return (
         <motion.button
             className="skill-node"
             type="button"
             onClick={() => onClick(skill)}
             aria-label={`${skill.name} - ${skill.type}`}
-            initial={{ scale: 0, opacity: 0 }}
+            data-category-id={categoryId}
+            initial={{ opacity: 0, y: shouldReduceMotion ? 0 : -8 }}
             animate={{
-                scale: isExpanded ? 1 : 0,
                 opacity: isExpanded ? 1 : 0,
+                y: isExpanded || shouldReduceMotion ? 0 : -8,
             }}
             transition={{
-                type: 'spring',
-                stiffness: 260,
-                damping: 22,
-                delay: isExpanded ? 0.05 * index : 0,
+                duration: shouldReduceMotion ? 0.01 : 0.25,
+                ease: 'easeOut',
+                delay: shouldReduceMotion ? 0 : 0.04 * index,
             }}
             whileHover={{ scale: isExpanded ? 1.08 : 1 }}
             whileTap={{ scale: isExpanded ? 0.95 : 1 }}
@@ -44,8 +46,8 @@ export default function SkillNode({ skill, accent, isSelected, isExpanded, onCli
                         : {}
                 }
                 transition={{
-                    duration: 2,
-                    repeat: Infinity,
+                    duration: shouldReduceMotion ? 0.01 : 2,
+                    repeat: shouldReduceMotion ? 0 : Infinity,
                     ease: 'easeInOut',
                 }}
             >
