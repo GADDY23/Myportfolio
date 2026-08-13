@@ -40,10 +40,9 @@ export default function AboutSection() {
                         </h2>
 
                         <p className="text-gray-300 text-base sm:text-xl leading-relaxed max-w-xl">
-                            I'm a BS Information Systems graduate and a Full Stack Developer
+                            I'm a BS Information Systems graduate and aspiring Full Stack Developer
                             with hands-on experience in web development and IT support. 
-                            I build scalable applications using Laravel and modern frontend tools like React, 
-                            focusing on clean design and performance. 
+                            I build practical web applications using Laravel, modern frontend technologies, and clean user-focused design. 
                             I enjoy solving real-world problems by creating efficient and user-friendly systems.
                         </p>
                     </motion.div>
@@ -93,7 +92,7 @@ export default function AboutSection() {
                                 Growth
                             </h3>
                             <p className="text-gray-300 text-base leading-relaxed">
-                                Continuously learning and improving  through real-world projects and new technologies.
+                                Continuously developing my skills through hands-on projects, real-world experience, and emerging technologies.
                             </p>
                         </motion.article>
                     </motion.div>

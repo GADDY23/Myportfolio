@@ -174,7 +174,7 @@ function TimelineCard({ card, index }) {
                             }
                         }}
                     >
-                        See more
+                        See more →
                     </span>
                 )}
             </div>
@@ -221,8 +221,8 @@ export default function ExperienceSection() {
                     viewport={{ once: true }}
                     transition={{ duration: 0.5, ease: 'easeOut' }}
                 >
-                    <span className="timeline-section-label">EXPERIENCE</span>
-                    <h2 className="timeline-section-heading">My Professional Journey</h2>
+                    <span className="timeline-section-label">JOURNEY</span>
+                    <h2 className="timeline-section-heading">My Journey</h2>
                 </motion.div>
 
                 {/* Timeline */}

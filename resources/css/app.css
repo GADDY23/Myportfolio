@@ -5885,8 +5885,8 @@ animation: none !important;
     display: flex;
     flex-direction: column;
     justify-content: center;
-    gap: 0.55rem;
-    padding: 0.1rem 0;
+    gap: 0.7rem;
+    padding: 0.35rem 0;
     flex: 1;
     min-height: 0;
 }
@@ -5898,7 +5898,7 @@ animation: none !important;
     gap: 0;
     align-items: center;
     min-height: 0;
-    flex: 1 1 0;
+    flex: 0 0 auto;
 }
 
 .timeline-card--left,
@@ -5917,7 +5917,7 @@ animation: none !important;
     display: flex;
     justify-content: center;
     align-items: center;
-    z-index: 2;
+    z-index: 4;
 }
 
 .timeline-node-inner {
@@ -5951,7 +5951,7 @@ animation: none !important;
     width: 1.5rem;
     background: linear-gradient(90deg, rgba(139, 92, 246, 0.6), rgba(6, 182, 212, 0.4));
     opacity: 0.7;
-    z-index: 1;
+    z-index: 3;
     pointer-events: none;
 }
 
@@ -5977,10 +5977,11 @@ animation: none !important;
     box-shadow: 0 0.75rem 1.75rem rgba(0, 0, 0, 0.45), 0 0 0.75rem rgba(139, 92, 246, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.04);
     cursor: default;
     transition: border-color 280ms ease, box-shadow 280ms ease, transform 280ms ease;
-    height: 100%;
-    max-height: 100%;
+    height: auto;
+    max-height: none;
     overflow: hidden;
     display: flex;
+    z-index: 2;
 }
 
 /* Left cards: on the left column, accent bar on right */
@@ -6106,10 +6107,10 @@ animation: none !important;
 }
 
 .timeline-card-inner {
-    padding: 0.6rem 0.85rem 0.55rem;
+    padding: 0.9rem 1.15rem;
     display: flex;
     flex-direction: column;
-    gap: 0.28rem;
+    gap: 0.6rem;
     width: 100%;
     height: 100%;
     justify-content: center;
@@ -6119,11 +6120,11 @@ animation: none !important;
 .timeline-card-header {
     display: flex;
     align-items: flex-start;
-    gap: 0.5rem;
+    gap: 0.6rem;
 }
 
 .timeline-card-icon {
-    font-size: 1.15rem;
+    font-size: 1.2rem;
     flex-shrink: 0;
     margin-top: 0.05rem;
     line-height: 1;
@@ -6132,23 +6133,23 @@ animation: none !important;
 .timeline-card-titles {
     display: flex;
     flex-direction: column;
-    gap: 0.05rem;
+    gap: 0.16rem;
     min-width: 0;
 }
 
 .timeline-card-title {
-    font-size: 0.95rem;
+    font-size: 1.02rem;
     font-weight: 850;
-    line-height: 1.2;
+    line-height: 1.18;
     color: var(--text);
     margin: 0;
     letter-spacing: -0.01em;
 }
 
 .timeline-card-subtitle {
-    font-size: 0.78rem;
-    font-weight: 700;
-    color: rgba(139, 92, 246, 0.85);
+    font-size: 0.8rem;
+    font-weight: 750;
+    color: rgba(139, 92, 246, 0.9);
     margin: 0;
     line-height: 1.25;
 }
@@ -6156,18 +6157,18 @@ animation: none !important;
 .timeline-card-meta {
     display: flex;
     align-items: center;
-    gap: 0.4rem;
+    gap: 0.55rem;
     flex-wrap: wrap;
 }
 
 .timeline-card-badge {
     display: inline-flex;
     align-items: center;
-    font-size: 0.62rem;
+    font-size: 0.6rem;
     font-weight: 850;
     letter-spacing: 0.06em;
     text-transform: uppercase;
-    padding: 0.2rem 0.55rem;
+    padding: 0.22rem 0.52rem;
     border-radius: 999px;
     width: fit-content;
     background: color-mix(in srgb, var(--badge-color, #10B981) 12%, transparent);
@@ -6176,17 +6177,18 @@ animation: none !important;
 }
 
 .timeline-card-year {
-    font-size: 0.7rem;
+    font-size: 0.72rem;
     font-weight: 800;
     color: rgba(231, 228, 255, 0.55);
     letter-spacing: 0.03em;
 }
 
 .timeline-card-description {
-    font-size: 0.78rem;
-    line-height: 1.45;
+    font-size: 0.8rem;
+    line-height: 1.55;
     color: rgba(231, 228, 255, 0.75);
     margin: 0;
+    max-width: min(80%, 46ch);
 }
 
 .timeline-card-tags {
@@ -6343,6 +6345,10 @@ animation: none !important;
         text-align: left;
     }
 
+    .timeline-card-inner {
+        padding: 0.85rem 1rem;
+    }
+
     .timeline-card--left::before {
         right: auto;
         left: 0;
@@ -6376,20 +6382,26 @@ animation: none !important;
     }
 
     .timeline-card-inner {
-        padding: 0.6rem 0.65rem 0.55rem;
-        gap: 0.3rem;
+        padding: 0.8rem 0.85rem;
+        gap: 0.52rem;
     }
 
     .timeline-card-title {
-        font-size: 0.85rem;
+        font-size: 0.94rem;
     }
 
     .timeline-card-subtitle {
-        font-size: 0.68rem;
+        font-size: 0.74rem;
     }
 
     .timeline-card-description {
-        font-size: 0.68rem;
+        font-size: 0.74rem;
+        line-height: 1.5;
+        max-width: 100%;
+    }
+
+    .timeline-card-meta {
+        gap: 0.45rem;
     }
 
 .timeline-card-list-item,
