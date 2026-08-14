@@ -50,8 +50,7 @@ export default function CharacterCard() {
                 {/* Scan line sweep */}
                 <div className="character-scanline aaa-char-scan" aria-hidden="true" />
 
-                {/* Thin rotating border ring */}
-                <div className="aaa-char-ring" aria-hidden="true" />
+                
             </motion.div>
 
             {/* Lore text */}

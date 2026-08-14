@@ -25,6 +25,9 @@ const projects = [
     {
         title: 'Web-Based Scheduling & Assignment System',
         category: 'Web',
+        projectType: 'Featured Project · Capstone',
+        role: 'Full Stack Developer & Project Lead',
+        featured: true,
         summary: 'A capstone system for ACLC College of Taytay that streamlines academic scheduling for rooms, teachers, subjects, and student sections.',
         tech: ['Laravel 12', 'PHP', 'MySQL', 'Blade', 'Tailwind CSS', 'JavaScript'],
         accent: 'teal',
@@ -32,12 +35,15 @@ const projects = [
         documentation: '/documents/surena%20(1).pdf',
         problem: 'ACLC College of Taytay relied on manual scheduling and spreadsheet checks, making it time-consuming and prone to double bookings, overlapping classes, uneven teaching loads, and incorrect room assignments.',
         solution: 'Developed a secure, role-based web application that centralizes academic scheduling. Administrators can assign rooms, teachers, subjects, and sections while the system checks for time and resource conflicts before schedules are saved.',
+        contribution: 'Led the development of the web-based scheduling system, including system design, database development, backend implementation, scheduling logic, interface development, and testing.',
         features: ['Role-based access for administrators, teachers, and students', 'Management of users, teachers, rooms, subjects, sections, curricula, and academic terms', 'Schedule creation with teacher, room, and section conflict detection', 'Personalized “My Timetable” views for teachers and students', 'Schedules searchable by teacher, section, or room', 'Dashboard notifications for schedule changes and announcements'],
         lessons: 'This capstone strengthened my experience building a full-stack Laravel application, modelling related academic data, validating scheduling constraints, and designing role-specific workflows. The system was tested through user acceptance testing and evaluated using ISO/IEC 25010 quality criteria.',
     },
     {
         title: 'Healthcare Hospital System',
         category: 'Web',
+        projectType: 'Academic Project',
+        role: 'Full Stack Developer',
         summary: 'A hospital management platform where patients can view services, explore departments, find doctors, schedule appointments, and manage their records online.',
         tech: ['Laravel', 'MySQL', 'Blade', 'Filament'],
         accent: 'blue',
@@ -46,12 +52,15 @@ const projects = [
         documentation: '/documents/FINALS%20(1).pdf',
         problem: 'Hospitals often rely on manual and fragmented processes for booking appointments, exploring departments, finding the right doctor, and managing patient records. This makes it difficult and time-consuming for patients to access care and for staff to keep information organized and accurate.',
         solution: 'Built a modern, user-friendly hospital management system that lets patients view services, explore departments, find doctors, and schedule appointments online while centralizing patient information and records for the hospital. An integrated admin panel keeps records, appointments, and system data manageable.',
+        contribution: 'Developed the public-facing patient experience and the supporting Laravel and Filament workflows for appointments, patient information, and administration.',
         features: ['Hospital dashboard with Home, Services, Departments, Doctors, Patient Info, Appointments, and Registration', 'Responsive layout with sidebar navigation, quick links, and patient profile access', 'Homepage overview with live capacity, average waiting time, and quick booking actions', 'Service, department, and doctor pages with scheduling and booking options', 'Appointment tracking and patient information management', 'Filament admin panel for managing records, appointments, and system data'],
         lessons: 'This project reinforced the importance of structuring a full-stack Laravel application with clear separation between the public-facing Blade pages and the Filament admin panel. It deepened my understanding of database relationships, appointment workflows, and building responsive, user-friendly healthcare interfaces.',
     },
     {
         title: 'DineTable — Saffron Table',
         category: 'Web',
+        projectType: 'Academic Project',
+        role: 'Full Stack Developer',
         summary: 'A responsive restaurant reservation platform for Saffron Table, with dining experiences, menu browsing, guest registration, and table booking in one polished flow.',
         tech: ['Laravel', 'MySQL', 'Blade', 'Filament'],
         accent: 'amber',
@@ -61,12 +70,15 @@ const projects = [
         documentation: '/documents/dinetable.pdf',
         problem: 'Restaurant guests need a clear way to discover dining options, review the menu, create a guest profile, and reserve a table without switching between disconnected pages or manual booking steps.',
         solution: 'Created a responsive Saffron Table reservation platform that guides guests from the restaurant homepage through dining experiences and menu browsing to registration, customer information, and a complete booking flow.',
+        contribution: 'Designed and developed the responsive reservation journey, connecting guest information, registration, and table booking workflows.',
         features: ['Restaurant homepage with dining highlights and quick reservation actions', 'Dining Experiences page for exploring available services and setups', 'Menu page for browsing signature plates, house favorites, and drinks', 'Guest Registration page for creating a customer account', 'Customer Info page for saving and managing guest details', 'Booking / Reservation page for selecting guest, table, date, time, and special request details', 'Admin pages for managing users, guest information, and reservations'],
         lessons: 'This project strengthened my understanding of designing a complete reservation journey, connecting customer data to booking records, and building responsive restaurant interfaces that feel consistent from discovery through confirmation.',
     },
     {
         title: 'Booking Flow',
         category: 'UI',
+        projectType: 'Practice Project',
+        role: 'Frontend Developer',
         summary: 'A responsive booking interface focused on clear steps, readable forms, and confident user actions.',
         tech: ['React', 'JavaScript', 'CSS'],
         accent: 'amber',
@@ -74,6 +86,8 @@ const projects = [
     {
         title: 'API Practice',
         category: 'Backend',
+        projectType: 'Practice Project',
+        role: 'Backend Developer',
         summary: 'Backend practice project for organizing data, routes, validation, and structured responses.',
         tech: ['Laravel', 'PHP', 'API'],
         accent: 'violet',
@@ -271,9 +285,8 @@ function CategoryRail({ activeSection, onSectionChange }) {
 }
 
 function Projects({ activeFilter, onFilterChange, projects, onSelectProject, selectedProject }) {
-    // Featured project = first one in filtered list
-    const featured = projects.length > 0 ? projects[0] : null;
-    const galleryProjects = projects.slice(1);
+    const featured = projects.find((project) => project.featured) || null;
+    const galleryProjects = featured ? projects.filter((project) => project !== featured) : projects;
 
     return (
         <section id="projects" className="projects-section">
@@ -315,6 +328,7 @@ function Projects({ activeFilter, onFilterChange, projects, onSelectProject, sel
                                 <span className="project-featured-badge">Featured Project</span>
                                 <h3 className="project-featured-title">{featured.title}</h3>
                                 <p className="project-featured-summary">{featured.summary}</p>
+                                <p className="project-role"><span>Role</span>{featured.role}</p>
                                 <div className="project-featured-tech">
                                     {featured.tech.map((t) => (
                                         <span key={t} className="project-featured-tag">{t}</span>
@@ -342,7 +356,7 @@ transition={{ duration: 0.4, delay: 0.1 + i * 0.08, ease: 'easeOut' }}
                                 {project.image && (
                                     <img src={project.image} alt={project.title} className="project-gallery-img" />
                                 )}
-                                <div className="project-gallery-badge">{project.category}</div>
+                                <div className="project-gallery-badge">{project.projectType || project.category}</div>
                                 <div className="project-gallery-lines">
                                     <span></span><span></span><span></span>
                                 </div>
@@ -355,6 +369,7 @@ transition={{ duration: 0.4, delay: 0.1 + i * 0.08, ease: 'easeOut' }}
                                         <span key={t} className="project-gallery-tag">{t}</span>
                                     ))}
                                 </div>
+                                <span className="project-gallery-cta">View Details →</span>
                             </div>
                         </motion.article>
                     ))}
@@ -407,8 +422,9 @@ function ProjectModal({ project, onClose }) {
                 </button>
 
                 <div className="project-modal-header">
-                    <span className="project-modal-badge">{project.category}</span>
+                    <span className="project-modal-badge">{project.projectType || project.category}</span>
                     <h2 className="project-modal-title">{project.title}</h2>
+                    {project.role && <p className="project-modal-role"><span>Role</span>{project.role}</p>}
                 </div>
 
                 {/* Project demo video */}
@@ -447,22 +463,27 @@ function ProjectModal({ project, onClose }) {
                     </div>
 
                     {/* Problem */}
-                    <div className="project-modal-section">
+                    {project.problem && <div className="project-modal-section">
                         <h3 className="project-modal-section-title">Problem</h3>
                         <p className="project-modal-text">{project.problem}</p>
-                    </div>
+                    </div>}
+
+                    {project.contribution && <div className="project-modal-section">
+                        <h3 className="project-modal-section-title">My Contribution</h3>
+                        <p className="project-modal-text">{project.contribution}</p>
+                    </div>}
 
                     {/* Solution */}
-                    <div className="project-modal-section">
+                    {project.solution && <div className="project-modal-section">
                         <h3 className="project-modal-section-title">Solution</h3>
                         <p className="project-modal-text">{project.solution}</p>
-                    </div>
+                    </div>}
 
                     {/* Features */}
-                    <div className="project-modal-section">
+                    {project.features?.length > 0 && <div className="project-modal-section">
                         <h3 className="project-modal-section-title">Key Features</h3>
                         <ul className="project-modal-list">{project.features.map((feature) => <li key={feature}>{feature}</li>)}</ul>
-                    </div>
+                    </div>}
 
                     {/* Tech Stack */}
                     <div className="project-modal-section">
@@ -475,10 +496,10 @@ function ProjectModal({ project, onClose }) {
                     </div>
 
                     {/* Lessons Learned */}
-                    <div className="project-modal-section">
+                    {project.lessons && <div className="project-modal-section">
                         <h3 className="project-modal-section-title">Lessons Learned</h3>
                         <p className="project-modal-text">{project.lessons}</p>
-                    </div>
+                    </div>}
 
                     {/* Actions */}
                     <div className="project-modal-actions">
@@ -540,14 +561,14 @@ function ProjectModal({ project, onClose }) {
 }
 
 function Contact() {
+    const primaryContact = {
+        icon: '✉️',
+        label: 'Send Me an Email',
+        value: 'geraldrecana03@gmail.com',
+        href: 'mailto:geraldrecana03@gmail.com',
+    };
+
     const contactCards = [
-        {
-            icon: '✉️',
-            label: 'Email',
-            value: 'geraldrecana03@gmail.com',
-            href: 'mailto:geraldrecana03@gmail.com',
-            primary: true,
-        },
         {
             icon: '🔗',
             label: 'LinkedIn',
@@ -567,8 +588,8 @@ function Contact() {
             label: 'Resume',
             value: 'Download PDF',
             href: '/documents/Recana_CV.pdf',
-            primary: false,
             download: true,
+            resume: true,
         },
     ];
 
@@ -587,35 +608,51 @@ function Contact() {
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.5, delay: 0.1 }}
                 >
-                    <div className="contact-availability">
-                        <span className="contact-availability-dot" />
-                        <span>Available for opportunities</span>
-                    </div>
-                    <h2 className="contact-heading">Let's Work Together</h2>
+                    <span className="contact-label">CONTACT</span>
+                    <h2 className="contact-heading">Let's Build Something Together</h2>
                     <p className="contact-message">
-                        I'm actively seeking opportunities as a Web Developer, Laravel Developer,
-                        Full Stack Developer, or IT Support Specialist. If you think I'd be a good
-                        fit for your team, let's connect.
+                        I'm currently open to opportunities in Web Development, Full Stack Development,
+                        Laravel Development, and IT Support.
                     </p>
                 </motion.div>
 
-                {/* Contact Cards Grid */}
+                <motion.a
+                    href={primaryContact.href}
+                    className="contact-card contact-card--email"
+                    aria-label="Send Gerald Recaña an email"
+                    initial={{ opacity: 0, y: 24 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.4, delay: 0.2, ease: 'easeOut' }}
+                    whileHover={{ y: -3 }}
+                    whileTap={{ scale: 0.98 }}
+                >
+                    <span className="contact-card-ripple" aria-hidden="true" />
+                    <span className="contact-card-icon" aria-hidden="true">{primaryContact.icon}</span>
+                    <span className="contact-card-info">
+                        <span className="contact-card-label">{primaryContact.label}</span>
+                        <span className="contact-card-value">{primaryContact.value}</span>
+                    </span>
+                    <span className="contact-card-arrow" aria-hidden="true">→</span>
+                </motion.a>
+
                 <div className="contact-cards-grid">
                     {contactCards.map((card, i) => (
                         <motion.a
                             key={card.label}
                             href={card.href}
-                            target={card.download ? '_self' : '_blank'}
-                            rel={card.download ? '' : 'noreferrer'}
-                            className={`contact-card ${card.primary ? 'contact-card--primary' : ''}`}
+                            {...(card.download ? { download: true } : {})}
+                            target={card.href.startsWith('http') ? '_blank' : undefined}
+                            rel={card.href.startsWith('http') ? 'noreferrer' : undefined}
+                            className={`contact-card ${card.resume ? 'contact-card--resume' : ''}`}
+                            aria-label={card.resume ? 'Download Gerald Recaña resume PDF' : `Open Gerald Recaña's ${card.label} profile`}
                             initial={{ opacity: 0, y: 30 }}
                             animate={{ opacity: 1, y: 0 }}
-                            transition={{ duration: 0.4, delay: 0.2 + i * 0.1, ease: 'easeOut' }}
-                            whileHover={{ y: -6, scale: 1.03 }}
+                            transition={{ duration: 0.4, delay: 0.3 + i * 0.08, ease: 'easeOut' }}
+                            whileHover={{ y: -3 }}
                             whileTap={{ scale: 0.98 }}
                         >
                             <span className="contact-card-ripple" aria-hidden="true" />
-                            <span className="contact-card-icon">{card.icon}</span>
+                            <span className="contact-card-icon" aria-hidden="true">{card.icon}</span>
                             <div className="contact-card-info">
                                 <span className="contact-card-label">{card.label}</span>
                                 <span className="contact-card-value">{card.value}</span>
@@ -624,6 +661,12 @@ function Contact() {
                         </motion.a>
                     ))}
                 </div>
+
+                <div className="contact-closing">
+                    <p>Have a project, opportunity, or idea in mind?</p>
+                    <span>I'd be happy to hear from you.</span>
+                </div>
+                <footer className="contact-footer">© 2026 Gerald S. Recaña</footer>
             </motion.div>
         </section>
     );

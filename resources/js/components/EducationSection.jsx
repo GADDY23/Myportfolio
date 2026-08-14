@@ -38,15 +38,6 @@ const chipVariants = {
     }),
 };
 
-const badgeVariants = {
-    hidden: { opacity: 0, x: -20 },
-    visible: (i) => ({
-        opacity: 1,
-        x: 0,
-        transition: { duration: 0.4, ease: 'easeOut', delay: 0.4 + i * 0.1 },
-    }),
-};
-
 const techVariants = {
     hidden: { opacity: 0, y: 12 },
     visible: (i) => ({
@@ -81,7 +72,7 @@ const technicalFoundation = [
     {
         icon: '🔍',
         title: 'System Analysis',
-        text: 'Analyzing business requirements and developing effective system solutions.',
+        text: 'Analyzing business requirements and designing effective system solutions.',
     },
     {
         icon: '🛠️',
@@ -100,9 +91,6 @@ const technologies = [
     'MySQL',
     'Git',
     'GitHub',
-    'Visual Studio Code',
-    'Laragon',
-    'XAMPP',
 ];
 
 export default function EducationSection() {
@@ -118,10 +106,9 @@ export default function EducationSection() {
                 {/* ===== Section Header ===== */}
                 <motion.div className="education-premium__header" variants={headerVariants}>
                     <span className="education-premium__label">EDUCATION</span>
-                    <h2 className="education-premium__heading">Building a Strong Academic Foundation</h2>
+                    <h2 className="education-premium__heading">Academic Foundation</h2>
                     <p className="education-premium__subtitle">
-                        My academic journey provided the knowledge, discipline, and technical foundation that
-                        continue to shape my growth as a software developer and IT professional.
+                        My academic journey shaped my foundation in software development, systems analysis, and IT.
                     </p>
                 </motion.div>
 
@@ -154,37 +141,16 @@ export default function EducationSection() {
                                 </div>
                             </div>
 
-                            <div className="education-premium__badges">
-                                {[
-                                    { icon: '🏆', label: 'Summa Cum Laude' },
-                                    { icon: '🏆', label: 'Best in Capstone' },
-                                ].map((badge, i) => (
-                                    <motion.span
-                                        key={badge.label}
-                                        className="education-premium__badge"
-                                        custom={i}
-                                        variants={badgeVariants}
-                                        initial="hidden"
-                                        whileInView="visible"
-                                        viewport={{ once: true }}
-                                    >
-                                        <span aria-hidden="true">{badge.icon}</span>
-                                        {badge.label}
-                                    </motion.span>
-                                ))}
-                            </div>
-
                             <p className="education-premium__card-description">
-                                Graduated with a strong academic foundation in software development, systems
-                                analysis, database management, networking, and information technology. Throughout
-                                my academic journey, I completed multiple software development projects and
-                                strengthened my analytical, technical, and problem-solving skills.
+                                Graduated with a strong foundation in software development, systems analysis,
+                                database management, networking, and information technology. Completed multiple
+                                software development projects focused on solving real-world problems.
                             </p>
                         </motion.article>
 
                         {/* ─── Academic Achievements Card ─── */}
                         <motion.article
-                            className="education-premium__card"
+                            className="education-premium__card education-premium__card--achievements"
                             variants={cardVariants}
                             whileHover={{
                                 scale: 1.02,
@@ -222,7 +188,7 @@ export default function EducationSection() {
                     <div className="education-premium__right">
                         {/* ─── CARD 1: Relevant Coursework ─── */}
                         <motion.article
-                            className="education-premium__card"
+                            className="education-premium__card education-premium__card--supporting"
                             variants={cardVariants}
                             whileHover={{
                                 scale: 1.02,
@@ -257,7 +223,7 @@ export default function EducationSection() {
 
                         {/* ─── CARD 2: Technical Foundation ─── */}
                         <motion.article
-                            className="education-premium__card"
+                            className="education-premium__card education-premium__card--supporting"
                             variants={cardVariants}
                             whileHover={{
                                 scale: 1.02,
@@ -294,9 +260,9 @@ export default function EducationSection() {
                             </div>
                         </motion.article>
 
-                        {/* ─── CARD 3: Technologies Learned ─── */}
+                        {/* ─── CARD 3: Technical Exposure ─── */}
                         <motion.article
-                            className="education-premium__card"
+                            className="education-premium__card education-premium__card--supporting education-premium__card--exposure"
                             variants={cardVariants}
                             whileHover={{
                                 scale: 1.02,
@@ -306,7 +272,7 @@ export default function EducationSection() {
                             onHoverStart={() => {}}
                             onHoverEnd={() => {}}
                         >
-                            <h3 className="education-premium__card-section-title">Technologies Learned</h3>
+                            <h3 className="education-premium__card-section-title">Technical Exposure</h3>
                             <div className="education-premium__tech-badges">
                                 {technologies.map((tech, i) => (
                                     <motion.span
