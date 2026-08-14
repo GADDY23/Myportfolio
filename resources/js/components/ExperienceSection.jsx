@@ -1,4 +1,4 @@
-import { useRef, useState, useEffect } from 'react';
+import { useRef } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { experienceCards } from '../data/experienceData';
 
@@ -34,14 +34,11 @@ const nodeVariants = {
 function TimelineCard({ card, index }) {
     const isLeft = index % 2 === 0;
     const isFeatured = !!card.featured;
-    const cardRef = useRef(null);
-
     // Show only 3 key features for the featured (Capstone) card
     const visibleHighlights = isFeatured && card.highlights ? card.highlights.slice(0, 3) : card.highlights;
 
     return (
         <motion.article
-            ref={cardRef}
             className={`timeline-card ${isLeft ? 'timeline-card--left' : 'timeline-card--right'} ${isFeatured ? 'timeline-card--featured' : ''}`}
             custom={isLeft}
             variants={cardVariants}
@@ -190,25 +187,6 @@ export default function ExperienceSection() {
     });
 
     const lineHeight = useTransform(scrollYProgress, [0, 1], ['0%', '100%']);
-
-    // Use a simple progress value for the timeline line within section visibility
-    const [lineProgress, setLineProgress] = useState(0);
-
-    useEffect(() => {
-        const observer = new IntersectionObserver(
-            ([entry]) => {
-                if (entry.isIntersecting) {
-                    const ratio = Math.min(entry.intersectionRatio * 1.5, 1);
-                    setLineProgress(ratio);
-                }
-            },
-            { threshold: [0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1] }
-        );
-        if (sectionRef.current) {
-            observer.observe(sectionRef.current);
-        }
-        return () => observer.disconnect();
-    }, []);
 
     return (
         <section className="timeline-section" aria-label="Experience" ref={sectionRef}>

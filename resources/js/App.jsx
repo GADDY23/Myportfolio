@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState, useCallback } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { Routes, Route, useLocation } from 'react-router-dom';
 import { AnimatePresence, motion } from 'framer-motion';
 import Ferrofluid from './components/Ferrofluid';
@@ -231,7 +231,6 @@ function HomePage() {
                                 onFilterChange={setActiveFilter}
                                 projects={visibleProjects}
                                 onSelectProject={setSelectedProject}
-                                selectedProject={selectedProject}
                             />
                         )}
                         {activeSection === 'Education' && <EducationSection />}
@@ -284,7 +283,7 @@ function CategoryRail({ activeSection, onSectionChange }) {
     );
 }
 
-function Projects({ activeFilter, onFilterChange, projects, onSelectProject, selectedProject }) {
+function Projects({ activeFilter, onFilterChange, projects, onSelectProject }) {
     const featured = projects.find((project) => project.featured) || null;
     const galleryProjects = featured ? projects.filter((project) => project !== featured) : projects;
 

@@ -3,15 +3,6 @@ import { motion, AnimatePresence } from 'framer-motion';
 import Ferrofluid from './Ferrofluid';
 import SystemBoot from './SystemBoot';
 
-const loadingCycle = [
-  'Initializing Portfolio...',
-  'Loading Developer Profile...',
-  'Compiling Experience...',
-  'Loading Projects...',
-  'Checking Skills...',
-  'Preparing Interface...',
-];
-
 const tipCycle = [
   'Click my profile to learn more.',
   'Scroll down to navigate section',
@@ -46,14 +37,7 @@ const LoadingScreen = ({ onDone }) => {
     return window.matchMedia?.('(prefers-reduced-motion: reduce)')?.matches ?? false;
   }, []);
 
-  const [loadingIndex, setLoadingIndex] = useState(0);
   const [tipIndex, setTipIndex] = useState(0);
-
-  useInterval(
-    () => setLoadingIndex((i) => (i + 1) % loadingCycle.length),
-    2000,
-    { disabled: prefersReducedMotion }
-  );
 
   useInterval(
     () => setTipIndex((i) => (i + 1) % tipCycle.length),
