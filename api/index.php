@@ -3,8 +3,6 @@
 use Illuminate\Http\Request;
 use Illuminate\Foundation\Application;
 
-define('LARAVEL_START', microtime(true));
-
 try {
     // Vercel uses /tmp for writable runtime files.
     $storagePath = '/tmp/laravel-storage';
