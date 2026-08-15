@@ -1,45 +1,52 @@
 <?php
 
-putenv('APP_ENV=local');
-putenv('APP_DEBUG=true');
+use Illuminate\Http\Request;
+use Illuminate\Foundation\Application;
 
-$_ENV['APP_ENV'] = 'local';
-$_ENV['APP_DEBUG'] = 'true';
+define('LARAVEL_START', microtime(true));
 
-$_SERVER['APP_ENV'] = 'local';
-$_SERVER['APP_DEBUG'] = 'true';
+try {
+    // Vercel uses /tmp for writable runtime files.
+    $storagePath = '/tmp/laravel-storage';
 
-foreach ([
-    'SESSION_DRIVER' => 'array',
-    'CACHE_STORE' => 'array',
-    'QUEUE_CONNECTION' => 'sync',
-    'LOG_CHANNEL' => 'stderr',
-] as $key => $value) {
-    if (getenv($key) === false) {
-        putenv("{$key}={$value}");
-        $_ENV[$key] = $value;
-        $_SERVER[$key] = $value;
+    foreach ([
+        $storagePath,
+        "{$storagePath}/app/private",
+        "{$storagePath}/app/public",
+        "{$storagePath}/framework/cache/data",
+        "{$storagePath}/framework/sessions",
+        "{$storagePath}/framework/views",
+        "{$storagePath}/logs",
+    ] as $directory) {
+        if (!is_dir($directory)) {
+            mkdir($directory, 0777, true);
+        }
     }
+
+    putenv("LARAVEL_STORAGE_PATH={$storagePath}");
+    $_ENV['LARAVEL_STORAGE_PATH'] = $storagePath;
+    $_SERVER['LARAVEL_STORAGE_PATH'] = $storagePath;
+
+    putenv('SESSION_DRIVER=array');
+    putenv('CACHE_STORE=array');
+    putenv('QUEUE_CONNECTION=sync');
+    putenv('LOG_CHANNEL=stderr');
+
+    $_ENV['SESSION_DRIVER'] = 'array';
+    $_ENV['CACHE_STORE'] = 'array';
+    $_ENV['QUEUE_CONNECTION'] = 'sync';
+    $_ENV['LOG_CHANNEL'] = 'stderr';
+
+    require __DIR__ . '/../public/index.php';
+
+} catch (\Throwable $e) {
+    http_response_code(500);
+
+    header('Content-Type: text/plain; charset=utf-8');
+
+    echo "Laravel startup error\n\n";
+    echo get_class($e) . "\n";
+    echo $e->getMessage() . "\n\n";
+    echo $e->getFile() . ':' . $e->getLine() . "\n\n";
+    echo $e->getTraceAsString();
 }
-
-$storagePath = '/tmp/laravel';
-
-foreach ([
-    $storagePath,
-    "{$storagePath}/app/private",
-    "{$storagePath}/app/public",
-    "{$storagePath}/framework/cache/data",
-    "{$storagePath}/framework/sessions",
-    "{$storagePath}/framework/views",
-    "{$storagePath}/logs",
-] as $directory) {
-    if (!is_dir($directory)) {
-        mkdir($directory, 0777, true);
-    }
-}
-
-putenv("LARAVEL_STORAGE_PATH={$storagePath}");
-$_ENV['LARAVEL_STORAGE_PATH'] = $storagePath;
-$_SERVER['LARAVEL_STORAGE_PATH'] = $storagePath;
-
-require __DIR__ . '/../public/index.php';
