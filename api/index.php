@@ -1,27 +1,43 @@
 <?php
 
 use Illuminate\Http\Request;
-use Illuminate\Foundation\Application;
 
 try {
-    // Vercel uses /tmp for writable runtime files.
+    /*
+    |--------------------------------------------------------------------------
+    | Vercel writable storage
+    |--------------------------------------------------------------------------
+    */
+
     $storagePath = '/tmp/laravel-storage';
 
-    foreach ([
+    $directories = [
         $storagePath,
+        "{$storagePath}/app",
         "{$storagePath}/app/private",
         "{$storagePath}/app/public",
+        "{$storagePath}/framework",
+        "{$storagePath}/framework/cache",
         "{$storagePath}/framework/cache/data",
         "{$storagePath}/framework/sessions",
         "{$storagePath}/framework/views",
         "{$storagePath}/logs",
-    ] as $directory) {
+    ];
+
+    foreach ($directories as $directory) {
         if (!is_dir($directory)) {
             mkdir($directory, 0777, true);
         }
     }
 
+    /*
+    |--------------------------------------------------------------------------
+    | Environment variables
+    |--------------------------------------------------------------------------
+    */
+
     putenv("LARAVEL_STORAGE_PATH={$storagePath}");
+
     $_ENV['LARAVEL_STORAGE_PATH'] = $storagePath;
     $_SERVER['LARAVEL_STORAGE_PATH'] = $storagePath;
 
@@ -35,9 +51,16 @@ try {
     $_ENV['QUEUE_CONNECTION'] = 'sync';
     $_ENV['LOG_CHANNEL'] = 'stderr';
 
+    /*
+    |--------------------------------------------------------------------------
+    | Start Laravel
+    |--------------------------------------------------------------------------
+    */
+
     require __DIR__ . '/../public/index.php';
 
 } catch (\Throwable $e) {
+
     http_response_code(500);
 
     header('Content-Type: text/plain; charset=utf-8');
