@@ -19,6 +19,35 @@ try {
 
     echo "REQUEST CAPTURED\n";
 
+    /*
+     * Boot the Laravel application manually.
+     */
+    $app->boot();
+
+    echo "APP BOOTED\n";
+
+    /*
+     * Check whether the view service exists BEFORE handling
+     * the actual request.
+     */
+    echo "VIEW BOUND: ";
+    var_dump($app->bound('view'));
+
+    echo "VIEW PROVIDERS:\n";
+
+    foreach ($app->getProviders(\Illuminate\View\ViewServiceProvider::class) as $provider) {
+        echo get_class($provider) . "\n";
+    }
+
+    echo "MAKING VIEW SERVICE...\n";
+
+    $view = $app->make('view');
+
+    echo "VIEW SERVICE CREATED: ";
+    echo get_class($view) . "\n";
+
+    echo "BEFORE HANDLE REQUEST\n";
+
     $response = $app->handleRequest($request);
 
     echo "REQUEST HANDLED\n";
@@ -27,18 +56,18 @@ try {
         echo "STATUS: " . $response->getStatusCode() . "\n";
         echo "CONTENT:\n";
         echo $response->getContent();
-    } else {
-        echo "RESPONSE TYPE: " . get_debug_type($response) . "\n";
     }
 
 } catch (\Throwable $e) {
+
     http_response_code(500);
 
-    echo "\n\n===== LARAVEL EXCEPTION =====\n";
+    echo "\n\n===== ORIGINAL EXCEPTION =====\n";
     echo "CLASS: " . get_class($e) . "\n";
     echo "MESSAGE: " . $e->getMessage() . "\n";
     echo "FILE: " . $e->getFile() . "\n";
     echo "LINE: " . $e->getLine() . "\n";
+
     echo "\nTRACE:\n";
     echo $e->getTraceAsString();
 }
